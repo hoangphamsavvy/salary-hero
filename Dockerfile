@@ -2,7 +2,7 @@ FROM node:16.3.0-alpine
 
 WORKDIR /code
 
-COPY env.example /code/.env
+COPY .env.example /code/.env
 
 COPY ["package.json", "package-lock.json*", "./"]
 
