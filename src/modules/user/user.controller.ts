@@ -1,4 +1,5 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import { RoleEnum } from '@common/constants/role.enum';
+import { Body, Controller, Post, Query, ValidationPipe } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateAdminDto } from '@shared/dto/user';
 import { UserService } from '@user/user.service';
@@ -10,7 +11,11 @@ export class UserController {
 
   @Post('/admin')
   @ApiResponse({})
-  async createAdmin(@Body(ValidationPipe) createAdminDto: CreateAdminDto) {
+  async createAdmin(
+    @Query('superAdminId') superAdminId: string,
+    @Body(ValidationPipe) createAdminDto: CreateAdminDto,
+  ) {
+    await this.userService.getSuperAdmin(superAdminId, RoleEnum.SUPER_ADMIN);
     return await this.userService.createAdmin(createAdminDto);
   }
 }
