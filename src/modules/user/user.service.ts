@@ -27,10 +27,6 @@ export class UserService {
     const employee = await this.employeeRepository.findOne({
       where: [{ email, companyId }],
     });
-    if (!employee) {
-      throw new NotFoundException('Employee is not found!!!');
-    }
-    const id = employee.id;
 
     const company = await this.companyRepository.findOne({
       where: { id: companyId },
@@ -38,13 +34,23 @@ export class UserService {
     if (!company) {
       throw new NotFoundException('Company is not found!!!');
     }
-    await this.employeeRepository.update(
-      { id },
-      {
+
+    if (employee) {
+      const id = employee.id;
+      await this.employeeRepository.update(
+        { id },
+        {
+          ...createAdminDto,
+          role: RoleEnum.COMPANY_ADMIN,
+        },
+      );
+    } else {
+      const employee = this.employeeRepository.create({
         ...createAdminDto,
         role: RoleEnum.COMPANY_ADMIN,
-      },
-    );
+      });
+      await employee.save();
+    }
   }
 
   async getSuperAdmin(userId: string, role: RoleEnum) {
