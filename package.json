@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.2",
     "@nestjs/typeorm": "^9.0.1",
+    "@types/moment": "^2.13.0",
     "@types/xlsx": "^0.0.36",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",

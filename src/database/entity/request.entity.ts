@@ -4,15 +4,12 @@ import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'requests' })
 export class Request extends AbstractEntity {
-  @Column({ name: 'employee_code' })
+  @Column({ name: 'employee_id' })
   employeeId: string;
 
-  @Column({ name: 'company_code' })
+  @Column({ name: 'company_id' })
   companyId: string;
 
   @Column({ name: 'amount', type: 'float4' })
   amount: number;
-
-  @Column({ name: 'status', default: RequestStatusEnum.PENDING })
-  password: string;
 }

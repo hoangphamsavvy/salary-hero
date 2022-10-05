@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
-import moment from 'moment';
+import * as moment from 'moment';
 import { EmployeeRepository, RequestRepository } from '@database/repository';
 import { CreateRequestDto } from '@shared/dto/request';
 
@@ -37,16 +37,16 @@ export class RequestService {
       );
     }
 
-    const startOfMonth = moment().startOf('month').format('YYYY-MM-DD hh:mm');
+    const startOfMonth = moment().startOf('month').format();
     const totalSummary = await this.requestRepository
       .createQueryBuilder(`requestTotalAmount`)
       .select(`SUM(requestTotalAmount.amount)`, `totalAmount`)
-      .where(`employeeId = :employeeId`, { employeeId: existEmployee.id })
-      .andWhere(`createdAt <= :endDate`, { endDate: current })
-      .andWhere(`createdAt >= :startDate`, { startDate: startOfMonth })
+      .where(`employee_id = :employeeId`, { employeeId: existEmployee.id })
+      .andWhere(`created_at <= :endDate`, { endDate: current })
+      .andWhere(`created_at >= :startDate`, { startDate: startOfMonth })
       .getRawOne();
 
-    if (totalSummary > existEmployee.salary / 2) {
+    if (+totalSummary.totalAmount > existEmployee.salary / 2) {
       throw new BadRequestException(
         'The total amount cannot exceed 50% of the salary!!!',
       );

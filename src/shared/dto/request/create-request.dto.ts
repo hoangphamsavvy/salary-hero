@@ -8,6 +8,11 @@ export class CreateRequestDto {
   employeeId: string;
 
   @IsNotEmpty()
+  @IsString()
+  @ApiProperty({})
+  companyId: string;
+
+  @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   @ApiProperty({})
