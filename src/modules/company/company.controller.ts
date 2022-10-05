@@ -42,7 +42,7 @@ export class CompanyController {
   @ApiResponse({})
   async getAll(
     @Query('superAdminId') superAdminId: string,
-    @Query('filterCompany') filterCompanyDto: FilterCompanyDto,
+    @Query() filterCompanyDto: FilterCompanyDto,
   ) {
     await this.userService.getSuperAdmin(superAdminId, RoleEnum.SUPER_ADMIN);
     const { items, pagination } = await this.companyService.getAll(

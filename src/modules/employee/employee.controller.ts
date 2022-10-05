@@ -50,7 +50,7 @@ export class EmployeeController {
   @ApiResponse({})
   async getAll(
     @Query('companyAdminId') companyAdminId: string,
-    @Query('filterEmployee') filterEmployeeDto: FilterEmployeeDto,
+    @Query() filterEmployeeDto: FilterEmployeeDto,
   ) {
     await this.employeeService.getAdmin(companyAdminId, RoleEnum.COMPANY_ADMIN);
     const { items, pagination } = await this.employeeService.getAll(
